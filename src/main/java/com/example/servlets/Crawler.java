@@ -1,4 +1,5 @@
 // package crawler;
+
 package com.example.servlets;
 
 import com.google.gson.Gson;
@@ -33,9 +34,9 @@ public class Crawler {
     String url = repoName;
 
     Request request = new Request.Builder()
-      .url(url)
-      .header("Authorization", "token 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")
-      .build();
+        .url(url)
+        .header("Authorization", "token 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")
+        .build();
     Call call = okHttpClient.newCall(request);
     Response response = call.execute();
     if (!response.isSuccessful()) {
@@ -48,22 +49,27 @@ public class Crawler {
   }
 
   public int getCompareRelease(
-    String repoName,
-    String repoName1,
-    String repoName2
+      String repoName,
+      String repoName1,
+      String repoName2
   ) throws IOException {
     String url =
-      "https://api.github.com/repos/" +
-      repoName +
-      "/compare/" +
-      repoName1 +
-      "..." +
-      repoName2;
+        "https://api.github.com/repos/" 
+        +
+        repoName 
+        +
+        "/compare/" 
+        +
+        repoName1 
+        +
+        "..." 
+        +
+        repoName2;
 
     Request request = new Request.Builder()
-      .url(url)
-      .header("Authorization", "token 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")
-      .build();
+        .url(url)
+        .header("Authorization", "token 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")
+        .build();
     Call call = okHttpClient.newCall(request);
     Response response = call.execute();
     if (!response.isSuccessful()) {
@@ -88,12 +94,12 @@ public class Crawler {
     return jsonArray.length();
   }
 
-  public int getContributorsCount(String repoName) throws IOException{
+  public int getContributorsCount(String repoName) throws IOException {
     String url = "https://api.github.com/repos/" + repoName + "/contributors?per_page=1&anon=true";
     Request request = new Request.Builder()
-      .url(url)
-      .header("Authorization", "token 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")
-      .build();
+        .url(url)
+        .header("Authorization", "token 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")
+        .build();
     Call call = okHttpClient.newCall(request);
     Response response = call.execute();
     String links = response.headers().get("link");
@@ -107,8 +113,8 @@ public class Crawler {
     String url = "https://api.github.com/search/issues";
     HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
     urlBuilder.addQueryParameter(
-      "q",
-      "repo:" + repoName + " is:issue" + " state:closed"
+        "q",
+        "repo:" + repoName + " is:issue" + " state:closed"
     );
     urlBuilder.addQueryParameter("per_page", "1");
 
@@ -116,9 +122,9 @@ public class Crawler {
     System.out.println(url);
 
     Request request = new Request.Builder()
-      .url(url)
-      .header("Authorization", "token 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")
-      .build();
+        .url(url)
+        .header("Authorization", "token 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")
+        .build();
     Call call = okHttpClient.newCall(request);
     Response response = call.execute();
     if (!response.isSuccessful()) {
@@ -133,12 +139,12 @@ public class Crawler {
 
   public JSONArray getCommitWeekday(String repoName) throws IOException {
     String url =
-      "https://api.github.com/repos/"+ repoName +"/stats/commit_activity";
+        "https://api.github.com/repos/" + repoName + "/stats/commit_activity";
 
     Request request = new Request.Builder()
-      .url(url)
-      .header("Authorization", "token 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")
-      .build();
+        .url(url)
+        .header("Authorization", "token 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")
+        .build();
     Call call = okHttpClient.newCall(request);
     Response response = call.execute();
     if (!response.isSuccessful()) {
@@ -153,12 +159,12 @@ public class Crawler {
 
   public String getRepoActiveContributor(String repoName) throws IOException {
     String url =
-      "https://api.github.com/repos/" + repoName + "/stats/contributors";
+        "https://api.github.com/repos/" + repoName + "/stats/contributors";
 
     Request request = new Request.Builder()
-      .url(url)
-      .header("Authorization", "token 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")
-      .build();
+        .url(url)
+        .header("Authorization", "token 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")
+        .build();
     Call call = okHttpClient.newCall(request);
     Response response = call.execute();
     if (!response.isSuccessful()) {
@@ -172,8 +178,8 @@ public class Crawler {
       jsonValues.add(jsonArray.getJSONObject(i));
     }
     Collections.sort(
-      jsonValues,
-      new Comparator<JSONObject>() {
+        jsonValues,
+        new Comparator<JSONObject>() {
         @Override
         public int compare(JSONObject a, JSONObject b) {
           int valA = 0;
@@ -194,9 +200,9 @@ public class Crawler {
   }
 
   public List<JSONObject> getRepoIssues(
-    String repoName,
-    String arg0,
-    String arg1
+      String repoName,
+      String arg0,
+      String arg1
   ) throws IOException {
     String url = repoName;
     HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
@@ -208,9 +214,9 @@ public class Crawler {
     System.out.println(url);
 
     Request request = new Request.Builder()
-      .url(url)
-      .header("Authorization", "token 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")
-      .build();
+        .url(url)
+        .header("Authorization", "token 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")
+        .build();
     Call call = okHttpClient.newCall(request);
     Response response = call.execute();
     if (!response.isSuccessful()) {

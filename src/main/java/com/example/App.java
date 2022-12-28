@@ -9,8 +9,8 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 @ServletComponentScan
 public class App {
 
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(App.class, args);
-    }
+  public static void main(String[] args) throws Exception {
+    SpringApplication.run(App.class, args);
+  }
 
 }

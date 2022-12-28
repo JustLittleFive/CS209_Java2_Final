@@ -27,8 +27,8 @@ import org.json.JSONObject;
 // import org.springframework.web.bind.annotation.RequestMethod;
 
 // @RestController
-@WebServlet(name = "testServlet", value = "/test")
-public class testServlet extends HttpServlet {
+@WebServlet(name = "TestServlet", value = "/test")
+public class TestServlet extends HttpServlet {
 
   public void init() {}
 
@@ -36,8 +36,8 @@ public class testServlet extends HttpServlet {
   // @RequestMapping(value="/result", method=RequestMethod.POST)
   // protected void doPost(
   protected void doPost(
-    HttpServletRequest request,
-    HttpServletResponse response
+      HttpServletRequest request,
+      HttpServletResponse response
   ) throws ServletException, IOException {
     PrintWriter out = response.getWriter();
     out.println("<html><body>");
@@ -45,7 +45,7 @@ public class testServlet extends HttpServlet {
     Crawler crawler = new Crawler();
     // String repoName = "Grasscutters/Grasscutter";
     String jsonString = crawler.getRepoInfo(
-      "https://api.github.com/repos/" + repoName
+        "https://api.github.com/repos/" + repoName
     );
     Type type = new TypeToken<HashMap<String, Object>>() {}.getType();
     HashMap<String, Object> hashMap = crawler.gson.fromJson(jsonString, type);
@@ -65,12 +65,12 @@ public class testServlet extends HttpServlet {
 
     // issue：包括了issue和pull request
     List<JSONObject> jsonValues = crawler.getRepoIssues(
-      hashMap
+        hashMap
         .get("issues_url")
         .toString()
         .substring(0, hashMap.get("issues_url").toString().length() - 9),
-      " ",
-      " "
+        " ",
+        " "
     );
 
     // 有多少open的issue？（过滤掉了pull request）
@@ -81,19 +81,21 @@ public class testServlet extends HttpServlet {
     //     .count()
     // );
     out.println(
-      "<h1> Open issues count: " +
-      jsonValues
+         "<h1> Open issues count: " 
+         +
+         jsonValues
         .stream()
         .filter((JSONObject j) -> !j.has("pull_request"))
-        .count() +
-      "</h1>"
+        .count() 
+        +
+        "</h1>"
     );
 
     // 有多少closed的issue？（过滤掉了pull request）
     JSONObject json = crawler.getClosedIssueCount(repoName);
     // System.out.println((int) json.get("total_count"));
     out.println(
-      "<h1> Closed issues count: " + (int) json.get("total_count") + "</h1>"
+        "<h1> Closed issues count: " + (int) json.get("total_count") + "</h1>"
     );
 
     // issue解决时间
@@ -101,13 +103,13 @@ public class testServlet extends HttpServlet {
     // int issueIndex = rand.nextInt(json.length());
     System.out.println(json.toString());
     String startT = json
-      .getJSONArray("items")
-      .getJSONObject(0)
-      .getString("created_at");
+        .getJSONArray("items")
+        .getJSONObject(0)
+        .getString("created_at");
     String closeT = json
-      .getJSONArray("items")
-      .getJSONObject(0)
-      .getString("updated_at");
+        .getJSONArray("items")
+        .getJSONObject(0)
+        .getString("updated_at");
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
     Date date1;
     Date date2;
@@ -122,7 +124,7 @@ public class testServlet extends HttpServlet {
       int year = date2s.get(Calendar.YEAR) - date1s.get(Calendar.YEAR);
       int month = date2s.get(Calendar.MONTH) - date1s.get(Calendar.MONTH);
       int day =
-        date2s.get(Calendar.DAY_OF_MONTH) - date1s.get(Calendar.DAY_OF_MONTH);
+          date2s.get(Calendar.DAY_OF_MONTH) - date1s.get(Calendar.DAY_OF_MONTH);
       if (day < 0) {
         month -= 1;
         date2s.add(Calendar.MONTH, -1);
@@ -135,25 +137,38 @@ public class testServlet extends HttpServlet {
       long days = diff / (1000 * 60 * 60 * 24);
       long hours = (diff - days * (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
       long minutes =
-        (diff - days * (1000 * 60 * 60 * 24) - hours * (1000 * 60 * 60)) /
-        (1000 * 60);
+          (diff - days * (1000 * 60 * 60 * 24) - hours * (1000 * 60 * 60)) 
+          /
+          (1000 * 60);
       long s =
-        (diff / 1000 - days * 24 * 60 * 60 - hours * 60 * 60 - minutes * 60);
-      String CountTime =
-        "" +
-        year +
-        "y" +
-        month +
-        "m" +
-        day +
-        "d " +
-        hours +
-        "h" +
-        minutes +
-        "m" +
-        s +
-        "s";
-      out.println("<h1> Random issue finish time: " + CountTime + "</h1>");
+          (diff / 1000 - days * 24 * 60 * 60 - hours * 60 * 60 - minutes * 60);
+      String countTime =
+          "" 
+          +
+          year 
+          +
+          "y" 
+          +
+          month 
+          +
+          "m" 
+          +
+          day 
+          +
+          "d " 
+          +
+          hours 
+          +
+          "h" 
+          +
+          minutes 
+          +
+          "m" 
+          +
+          s 
+          +
+          "s";
+      out.println("<h1> Random issue finish time: " + countTime + "</h1>");
     } catch (ParseException e) {
       e.printStackTrace();
     }
@@ -161,16 +176,16 @@ public class testServlet extends HttpServlet {
     // 发布与提交
     // 有多少版本的发布？
     List<JSONObject> releasesValues = crawler.getRepoIssues(
-      hashMap
+        hashMap
         .get("releases_url")
         .toString()
         .substring(0, hashMap.get("releases_url").toString().length() - 5),
-      " ",
-      " "
+        " ",
+        " "
     );
     System.out.println(releasesValues.size());
     out.println(
-      "<h1> Release versions count: " + releasesValues.size() + "</h1>"
+        "<h1> Release versions count: " + releasesValues.size() + "</h1>"
     );
 
     // 发布之间有多少提交？
@@ -185,7 +200,7 @@ public class testServlet extends HttpServlet {
     }
     System.out.println(Arrays.toString(differ));
     out.println(
-      "<h1> Commits count between release: " + Arrays.toString(differ) + "</h1>"
+        "<h1> Commits count between release: " + Arrays.toString(differ) + "</h1>"
     );
 
     try {
@@ -205,10 +220,9 @@ public class testServlet extends HttpServlet {
       }
       System.out.println(Arrays.toString(week));
       out.println(
-        "<h1> Commits count by weekdays: " + Arrays.toString(week) + "</h1>"
+          "<h1> Commits count by weekdays: " + Arrays.toString(week) + "</h1>"
       );
     } catch (Exception e) {
-      // TODO: handle exception
       e.printStackTrace();
     }
 
