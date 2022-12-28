@@ -1,5 +1,5 @@
-com\example\Crawler\Crawler.class
 com\example\App.class
-com\example\Crawler\TestServlet$1.class
-com\example\Crawler\Crawler$1.class
-com\example\Crawler\TestServlet.class
+com\example\controller\Crawler$1.class
+com\example\controller\TestServlet$1.class
+com\example\controller\TestServlet.class
+com\example\controller\Crawler.class
